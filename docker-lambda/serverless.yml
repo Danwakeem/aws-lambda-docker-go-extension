@@ -1,0 +1,30 @@
+service: aws-lambda-docker
+frameworkVersion: '3'
+configValidationMode: warn
+
+provider:
+  name: aws
+  versionFunctions: false
+  architecture: arm64 # I am using arm64 for convenience because I am on an M1 mac :)
+  logRetentionInDays: 3
+  environment:
+    STAGE: ${sls:stage}
+    SERVERLESS_PLATFORM_STAGE: dev
+    SLS_DEV_MODE_ORG_ID: c492b73f-3704-4d5b-839a-d4fbc7adc328
+    SLS_DEV_TOKEN: 620cea8d-1d78-4e65-bd93-32d4609734f1
+  ecr:
+    images:
+      node:
+        path: ./
+
+functions:
+  api:
+    timeout: 20
+    image:
+      name: node
+      entryPoint:
+        - '/lambda-entrypoint.sh'
+    events:
+      - httpApi:
+          path: /
+          method: GET

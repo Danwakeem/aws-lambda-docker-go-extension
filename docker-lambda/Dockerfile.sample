@@ -1,0 +1,12 @@
+FROM <YOUR_AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/go-example-extension:latest AS layer
+FROM public.ecr.aws/lambda/nodejs:18
+
+WORKDIR /opt
+COPY --from=layer /opt/ ./
+
+WORKDIR /var/task
+COPY src/index.js package.json .
+
+RUN npm install
+
+CMD [ "index.handler" ]

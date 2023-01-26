@@ -1,0 +1,14 @@
+{
+  "name": "aws-lambda-docker-api",
+  "version": "1.0.0",
+  "description": "Docker sample API",
+  "main": "index.js",
+  "author": "Danwakeem",
+  "license": "MIT",
+  "scripts": {
+    "deploy": "sls deploy"
+  },
+  "devDependencies": {
+    "serverless": "^3.26.0"
+  }
+}
